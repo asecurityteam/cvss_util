@@ -7,7 +7,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='cvss-util',
-      url='https://bitbucket.org/asecurityteam/cvss_util',
+      url='https://github.com/asecurityteam/cvss_util',
       packages=find_packages(),
       description=read('README'),
       long_description=read('README'),
