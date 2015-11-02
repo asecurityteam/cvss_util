@@ -29,3 +29,6 @@ optional arguments:
   -i {none,partial,complete}, --IntegImpact {none,partial,complete}
   -ai {none,partial,complete}, --AvailImpact {none,partial,complete}
 ```
+
+
+[![Build Status](https://travis-ci.org/asecurityteam/cvss_util.svg?branch=master)](https://travis-ci.org/asecurityteam/cvss_util)
