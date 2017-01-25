@@ -1,4 +1,5 @@
 from __future__ import division
+import collections
 import math
 
 
@@ -6,17 +7,24 @@ def get_severity_description(score):
     """ Returns the matching qualitative severity rating for the given
         cvss v3 score.
     """
-    if score < 0.1:
-        return 'None'
-    if score <= 3.9:
-        return 'Low'
-    if score <= 6.9:
-        return 'Medium'
-    if score <= 8.9:
-        return 'High'
-    if score <= 10.0:
-        return 'Critical'
+    for severity, range in get_severity_description_rating_dict().items():
+        if range.bottom <= score <= range.top:
+            return severity
     raise ValueError('Invalid cvss score value')
+
+
+def get_severity_description_rating_dict():
+    """ Returns the qualitative severity rating ranges for
+        cvss v3 in a dictionary.
+    """
+    Range = collections.namedtuple('Range', ['bottom', 'top'])
+    return collections.OrderedDict([
+        ('None', Range(0.0, 0.0)),
+        ('Low', Range(0.1, 3.9)),
+        ('Medium', Range(4, 6.9)),
+        ('High', Range(7.0, 8.9)),
+        ('Critical', Range(9.0, 10.0)),
+    ])
 
 
 def get_scope_value(scope_changed):
