@@ -72,6 +72,38 @@ class TestCVSSCalculator(unittest.TestCase):
         self.assertEqual(score, 1.7)
         self.assertEqual(severity, 'Low')
 
+    def test_get_severity_description_low(self):
+        """ tests that get_severity_description works as expected with
+            the low rating.
+        """
+        for value in [0.0, 2.9]:
+            self.assertEqual(
+                calculator.get_severity_description(value), 'Low')
+
+    def test_get_severity_description_medium(self):
+        """ tests that get_severity_description works as expected with
+            the medium rating.
+        """
+        for value in [3.0, 5.9]:
+            self.assertEqual(
+                calculator.get_severity_description(value), 'Medium')
+
+    def test_get_severity_description_high(self):
+        """ tests that get_severity_description works as expected with
+            the high rating.
+        """
+        for value in [6.0, 7.9]:
+            self.assertEqual(
+                calculator.get_severity_description(value), 'High')
+
+    def test_get_severity_description_critical(self):
+        """ tests that get_severity_description works as expected with
+            the critical rating.
+        """
+        for value in [8.0, 10.0]:
+            self.assertEqual(
+                calculator.get_severity_description(value), 'Critical')
+
 
 if __name__ == "__main__":
     unittest.main()

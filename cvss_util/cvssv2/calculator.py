@@ -1,4 +1,5 @@
 from __future__ import division
+import collections
 
 
 def get_impact_f_val(impact):
@@ -80,14 +81,22 @@ def get_exploitability_score(access_v, access_comp, authen):
     return 20 * ac * au * av
 
 
-def get_severity_description(cvss_score):
+def get_severity_description(score):
     """ returns the 'description' for the cvss score level provided. """
-    if cvss_score <= 2.9:
-        return "Low"
-    if cvss_score <= 5.9:
-        return "Medium"
-    if cvss_score <= 7.9:
-        return "High"
-    if cvss_score <= 10:
-        return "Critical"
-    raise ValueError("Invalid cvss score value")
+    for severity, range in get_severity_description_rating_dict().items():
+        if range.bottom <= score <= range.top:
+            return severity
+    raise ValueError('Invalid cvss score value')
+
+
+def get_severity_description_rating_dict():
+    """ Returns the qualitative severity rating ranges for
+        cvss v2 in a dictionary.
+    """
+    Range = collections.namedtuple('Range', ['bottom', 'top'])
+    return collections.OrderedDict([
+        ('Low', Range(0.0, 2.9)),
+        ('Medium', Range(3.0, 5.9)),
+        ('High', Range(6.0, 7.9)),
+        ('Critical', Range(8.0, 10.0)),
+    ])
