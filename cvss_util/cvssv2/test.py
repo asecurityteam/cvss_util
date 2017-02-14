@@ -104,6 +104,31 @@ class TestCVSSCalculator(unittest.TestCase):
             self.assertEqual(
                 calculator.get_severity_description(value), 'Critical')
 
+    def test_get_base_vector_string_dict(self):
+        """ tests that the get_base_vector_string_dict works as expected. """
+        map = calculator.get_base_vector_string_dict()
+        for key, expected in (
+                ('L', 'Local'),
+                ('A', 'Adjacent Network'),
+                ('N', 'Network')):
+            self.assertEqual(map['av'][key], expected)
+        for key, expected in (
+                ('H', 'High'),
+                ('M', 'Medium'),
+                ('L', 'Low')):
+            self.assertEqual(map['ac'][key], expected)
+        for key, expected in (
+                ('M', 'Multiple'),
+                ('S', 'Single'),
+                ('N', 'None')):
+            self.assertEqual(map['au'][key], expected)
+        for impact in ['c', 'i', 'a']:
+            for key, expected in (
+                    ('N', 'None'),
+                    ('P', 'Partial'),
+                    ('C', 'Complete')):
+                self.assertEqual(map[impact][key], expected)
+
 
 if __name__ == "__main__":
     unittest.main()

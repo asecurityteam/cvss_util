@@ -100,3 +100,32 @@ def get_severity_description_rating_dict():
         ('High', Range(6.0, 7.9)),
         ('Critical', Range(8.0, 10.0)),
     ])
+
+
+def get_base_vector_string_dict():
+    """ returns the base vector string dictionary. """
+    impact_dict = {
+        'N': 'None',
+        'P': 'Partial',
+        'C': 'Complete',
+    }
+    return {
+        'av': {
+            'L': 'Local',
+            'A': 'Adjacent Network',
+            'N': 'Network',
+        },
+        'ac': {
+            'H': 'High',
+            'M': 'Medium',
+            'L': 'Low',
+        },
+        'au': {
+            'M': 'Multiple',
+            'S': 'Single',
+            'N': 'None',
+        },
+        'c': impact_dict,
+        'i': impact_dict,
+        'a': impact_dict,
+    }
