@@ -133,6 +133,39 @@ class TestCVSS3Calculator(unittest.TestCase):
         for key in ['adjacent', 'adjacent network']:
             self.assertEqual(calculator.get_attack_vector_value(key), 0.62)
 
+    def test_get_base_vector_string_dict(self):
+        """ tests that the get_base_vector_string_dict works as expected. """
+        map = calculator.get_base_vector_string_dict()
+        for key, expected in (
+                ('N', 'Network'),
+                ('A', 'Adjacent'),
+                ('L', 'Local'),
+                ('P', 'Physical')):
+            self.assertEqual(map['av'][key], expected)
+        for key, expected in (
+                ('L', 'Low'),
+                ('H', 'High')):
+            self.assertEqual(map['ac'][key], expected)
+        for key, expected in (
+                ('N', 'None'),
+                ('L', 'Low'),
+                ('H', 'High')):
+            self.assertEqual(map['pr'][key], expected)
+        for key, expected in (
+                ('N', 'None'),
+                ('R', 'Required')):
+            self.assertEqual(map['ui'][key], expected)
+        for key, expected in (
+                ('U', 'Unchanged'),
+                ('C', 'Changed')):
+            self.assertEqual(map['s'][key], expected)
+        for impact in ['c', 'i', 'a']:
+            for key, expected in (
+                    ('N', 'None'),
+                    ('L', 'Low'),
+                    ('H', 'High')):
+                self.assertEqual(map[impact][key], expected)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -153,3 +153,40 @@ def compute_base_score_from_dicts(
     )
     return compute_base_score(
         impact_sub_score, exploitability_sub_score, scope_changed)
+
+
+def get_base_vector_string_dict():
+    """ returns the base vector string dictionary. """
+    impact_dict = {
+        'N': 'None',
+        'L': 'Low',
+        'H': 'High',
+    }
+    return {
+        'av': {
+            'N': 'Network',
+            'A': 'Adjacent',
+            'L': 'Local',
+            'P': 'Physical',
+        },
+        'ac': {
+            'L': 'Low',
+            'H': 'High',
+        },
+        'pr': {
+            'N': 'None',
+            'L': 'Low',
+            'H': 'High',
+        },
+        'ui': {
+            'N': 'None',
+            'R': 'Required',
+        },
+        's': {
+            'U': 'Unchanged',
+            'C': 'Changed',
+        },
+        'c': impact_dict,
+        'i': impact_dict,
+        'a': impact_dict,
+    }
