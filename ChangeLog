@@ -3,6 +3,7 @@ CHANGES
 
 2.3.0
 -----
+
 * Sem-Ver: feature Add support for conversion of CVSS vectors to Jira markup strings
 
 2.2.0
