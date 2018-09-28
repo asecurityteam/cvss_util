@@ -1,0 +1,34 @@
+CHANGES
+=======
+
+2.3.0
+-----
+* Sem-Ver: feature Add support for conversion of CVSS vectors to Jira markup strings
+
+2.2.0
+-----
+
+* Sem-Ver: feature return the exploitability subscore in the parse_text_info_score dictionary
+
+2.1.1
+-----
+
+* Sem-Ver: feature Add a new get_base_vector_string_dict to the cvss v2 and v3 calculators
+
+2.1.0
+-----
+
+* Sem-Ver: feature Add a new get_severity_description_rating_dict to cvss v2 and v3 calculators and use it in the get_severity_description methods
+* Add a test for the severity description ranges of cvss v2
+* add travis-ci build status for master to the readme file
+* Update the readme file
+* Tweak the readme file slightly
+* Rename the README file
+* Use pbr
+
+2.0.2
+-----
+
+* Update the repository location from bitbucket to github
+* Add a travis-ci configuration file
+* init!

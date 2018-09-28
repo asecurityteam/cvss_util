@@ -5,7 +5,7 @@ from ..cvssv3 import calculator as v3_calculator
 
 
 def parse_text_info_score(comment):
-    """ Returns the result of parsing a wiki table like formatted cvss
+    """ Returns the result of parsing a wiki table-like formatted cvss
         score.
     """
     score_d = collections.OrderedDict()

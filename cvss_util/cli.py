@@ -43,5 +43,6 @@ def main():
     severity = calculator.get_severity_description(score)
     print(severity, abs(score))
 
+
 if __name__ == "__main__":
     main()

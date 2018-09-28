@@ -1,7 +1,71 @@
 #!/usr/bin/python
 import unittest
 
+from . import create_cvss_format
 from . import parse_cvss_format
+
+
+class TestCVSSFormatter(unittest.TestCase):
+
+    def test_format_critical_cvss_v2(self):
+        """ tests creating a jira table comment for a critical cvss v2 """
+        vector_string = 'AV:N/AC:L/Au:N/C:P/I:P/A:C'
+        expected = """
+Proposed CVSS score: 9.0 => *Critical* severity
+
+*Exploitability Metrics*
+
+|| AccessVector | Network |
+|| AccessComplexity | Low |
+|| Authentication | None |
+
+
+*Impact Metrics*
+
+|| ConfImpact | Partial |
+|| IntegImpact | Partial |
+|| AvailImpact | Complete |
+
+"""
+        self.assertEqual(
+            create_cvss_format.cvss_v2_vector_to_jira_table(
+                vector_string,
+                9.0,
+            ),
+            expected
+        )
+
+    def test_format_critical_cvss_v3(self):
+        """ tests creating a jira table comment for a critical cvss v3 """
+        vector_string = 'AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H'
+        expected = """
+Proposed CVSS v3 score: 9.6 => *Critical* severity
+
+*Exploitability Metrics*
+
+|| Attack Vector | Network |
+|| Attack Complexity | Low |
+|| Privileges Required | None |
+|| User Interaction | Required |
+
+*Scope Metric*
+
+|| Scope | Changed |
+
+*Impact Metrics*
+
+|| Confidentiality | High |
+|| Integrity | High |
+|| Availability | High |
+
+"""
+        self.assertEqual(
+            create_cvss_format.cvss_v3_vector_to_jira_table(
+                vector_string,
+                9.6,
+            ),
+            expected
+        )
 
 
 class TestCVSSParser(unittest.TestCase):
