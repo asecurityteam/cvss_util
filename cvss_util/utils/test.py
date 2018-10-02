@@ -27,13 +27,25 @@ Proposed CVSS score: 9.0 => *Critical* severity
 || AvailImpact | Complete |
 
 """
-        self.assertEqual(
-            create_cvss_format.cvss_v2_vector_to_jira_table(
-                vector_string,
-                9.0,
-            ),
-            expected
+        formatted_string = create_cvss_format.cvss_v2_vector_to_jira_table(
+            vector_string,
+            9.0,
         )
+        self.assertEqual(
+            formatted_string,
+            expected,
+        )
+
+        parsed = parse_cvss_format.parse_text_info_score(formatted_string)
+        self.assertEqual(parsed['version'], 2.0)
+        self.assertEqual(parsed['score'], 9.0)
+        self.assertEqual(parsed['exploitability_sub_score'], 10.0)
+        self.assertEqual(parsed['AccessVector'], 'Network')
+        self.assertEqual(parsed['AccessComplexity'], 'Low')
+        self.assertEqual(parsed['Authentication'], 'None')
+        for key in ['ConfImpact', 'IntegImpact']:
+            self.assertEqual(parsed[key], 'Partial')
+        self.assertEqual(parsed['AvailImpact'], 'Complete')
 
     def test_format_critical_cvss_v3(self):
         """ tests creating a jira table comment for a critical cvss v3 """
@@ -59,20 +71,30 @@ Proposed CVSS v3 score: 9.6 => *Critical* severity
 || Availability | High |
 
 """
-        self.assertEqual(
-            create_cvss_format.cvss_v3_vector_to_jira_table(
-                vector_string,
-                9.6,
-            ),
-            expected
+        formatted_string = create_cvss_format.cvss_v3_vector_to_jira_table(
+            vector_string,
+            9.6,
         )
+        self.assertEqual(
+            formatted_string,
+            expected,
+        )
+
+        parsed = parse_cvss_format.parse_text_info_score(formatted_string)
+        self.assertEqual(parsed['version'], 3.0)
+        self.assertEqual(parsed['score'], 9.6)
+        self.assertEqual(parsed['exploitability_sub_score'], 2.84)
+        self.assertEqual(parsed['Attack Vector'], 'Network')
+        self.assertEqual(parsed['Attack Complexity'], 'Low')
+        self.assertEqual(parsed['Privileges Required'], 'None')
+        self.assertEqual(parsed['User Interaction'], 'Required')
+        for key in ['Confidentiality', 'Integrity', 'Availability']:
+            self.assertEqual(parsed[key], 'High')
 
 
 class TestCVSSParser(unittest.TestCase):
 
-    def test_parse_critical_cvss_v2(self):
-        """ tests parsing a critical cvss v2 score """
-        text = """
+    v2_text = """
 Proposed CVSS score: 10 => *Critical* severity
 
 *Exploitability Metrics*
@@ -89,21 +111,8 @@ Proposed CVSS score: 10 => *Critical* severity
 || AvailImpact | Complete |
 
 """
-        parsed = parse_cvss_format.parse_text_info_score(text)
-        self.assertEqual(parsed['version'], 2.0)
-        self.assertEqual(parsed['score'], 10)
-        self.assertEqual(parsed['exploitability_sub_score'], 10.0)
-        self.assertEqual(parsed['AccessVector'], 'Network')
-        self.assertEqual(parsed['AccessComplexity'], 'Low')
-        self.assertEqual(parsed['Authentication'], 'None')
-        for key in ['ConfImpact', 'IntegImpact', 'AvailImpact']:
-            self.assertEqual(parsed[key], 'Complete')
 
-    def test_parse_cvss_v3_example_4_4(self):
-        """ tests parsing & calculating the cvss v3 score of example 4.4
-            (base score 9.9) from https://www.first.org/cvss/examples.
-        """
-        text = """
+    v3_text = """
 Proposed CVSS v3 score: 9.9 => *Critical* severity
 
 *Exploitability Metrics*
@@ -124,6 +133,23 @@ Proposed CVSS v3 score: 9.9 => *Critical* severity
 || Availability | High |
 
 """
+
+    def test_parse_critical_cvss_v2(self, text=v2_text):
+        """ tests parsing a critical cvss v2 score """
+        parsed = parse_cvss_format.parse_text_info_score(text)
+        self.assertEqual(parsed['version'], 2.0)
+        self.assertEqual(parsed['score'], 10)
+        self.assertEqual(parsed['exploitability_sub_score'], 10.0)
+        self.assertEqual(parsed['AccessVector'], 'Network')
+        self.assertEqual(parsed['AccessComplexity'], 'Low')
+        self.assertEqual(parsed['Authentication'], 'None')
+        for key in ['ConfImpact', 'IntegImpact', 'AvailImpact']:
+            self.assertEqual(parsed[key], 'Complete')
+
+    def test_parse_cvss_v3_example_4_4(self, text=v3_text):
+        """ tests parsing & calculating the cvss v3 score of example 4.4
+            (base score 9.9) from https://www.first.org/cvss/examples.
+        """
         parsed = parse_cvss_format.parse_text_info_score(text)
         self.assertEqual(parsed['version'], 3.0)
         self.assertEqual(parsed['score'], 9.9)

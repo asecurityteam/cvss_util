@@ -1,1 +1,3 @@
-__version__ = "2.3.0"
+import pbr.version
+
+__version__ = pbr.version.VersionInfo('cvss_util').version_string()
