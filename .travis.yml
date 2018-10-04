@@ -3,7 +3,7 @@ python:
   - "2.7"
   - "3.4"
 install:
-  - pip install -q pep8==1.6.2
+  - pip install -q pycodestyle==2.4.0
 script:
-  - pep8 cvss_util/ setup.py
+  - pycodestyle cvss_util/ setup.py
   - python setup.py test
