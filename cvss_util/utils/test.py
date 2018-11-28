@@ -94,7 +94,9 @@ Proposed CVSS v3 score: 9.6 => *Critical* severity
 
 class TestCVSSParser(unittest.TestCase):
 
-    v2_text = """
+    @property
+    def v2_text(self):
+        return"""
 Proposed CVSS score: 10 => *Critical* severity
 
 *Exploitability Metrics*
@@ -112,7 +114,9 @@ Proposed CVSS score: 10 => *Critical* severity
 
 """
 
-    v3_text = """
+    @property
+    def v3_text_example_4_4(self):
+        return """
 Proposed CVSS v3 score: 9.9 => *Critical* severity
 
 *Exploitability Metrics*
@@ -134,9 +138,9 @@ Proposed CVSS v3 score: 9.9 => *Critical* severity
 
 """
 
-    def test_parse_critical_cvss_v2(self, text=v2_text):
+    def test_parse_critical_cvss_v2(self):
         """ tests parsing a critical cvss v2 score """
-        parsed = parse_cvss_format.parse_text_info_score(text)
+        parsed = parse_cvss_format.parse_text_info_score(self.v2_text)
         self.assertEqual(parsed['version'], 2.0)
         self.assertEqual(parsed['score'], 10)
         self.assertEqual(parsed['exploitability_sub_score'], 10.0)
@@ -146,11 +150,12 @@ Proposed CVSS v3 score: 9.9 => *Critical* severity
         for key in ['ConfImpact', 'IntegImpact', 'AvailImpact']:
             self.assertEqual(parsed[key], 'Complete')
 
-    def test_parse_cvss_v3_example_4_4(self, text=v3_text):
+    def test_parse_cvss_v3_example_4_4(self):
         """ tests parsing & calculating the cvss v3 score of example 4.4
             (base score 9.9) from https://www.first.org/cvss/examples.
         """
-        parsed = parse_cvss_format.parse_text_info_score(text)
+        parsed = parse_cvss_format.parse_text_info_score(
+            self.v3_text_example_4_4)
         self.assertEqual(parsed['version'], 3.0)
         self.assertEqual(parsed['score'], 9.9)
         self.assertEqual(parsed['exploitability_sub_score'], 3.11)
