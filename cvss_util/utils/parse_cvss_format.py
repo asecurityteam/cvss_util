@@ -10,6 +10,7 @@ def parse_text_info_score(comment):
     """
     score_d = collections.OrderedDict()
     for line in comment.split("\n"):
+        line = line.strip()
         if "||" not in line:
             continue
         info = [item.strip() for item in line.split("|") if item != ""]

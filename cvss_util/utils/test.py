@@ -165,6 +165,16 @@ Proposed CVSS v3 score: 9.9 => *Critical* severity
         for key in ['Confidentiality', 'Integrity', 'Availability']:
             self.assertEqual(parsed[key], 'High')
 
+    def test_parse_cvss_v3_example_4_4_with_spacing(self):
+        """ tests that the parsing of cvss score information
+            works regardless of superfluous spacing.
+        """
+        text = self.v3_text_example_4_4.replace('\n', '\n ')
+        parsed = parse_cvss_format.parse_text_info_score(
+            text)
+        self.assertEqual(parsed['version'], 3.0)
+        self.assertEqual(parsed['score'], 9.9)
+
 
 if __name__ == "__main__":
     unittest.main()
