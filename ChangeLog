@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+2.4.2
+-----
+
+* Sem-Ver: bugfix require pbr for installation as we use it at runtime to determine version information
+
+
 2.4.1
 -----
 
