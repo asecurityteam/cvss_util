@@ -44,7 +44,6 @@ CHANGES
 
 * Sem-Ver: feature Add a new get_severity_description_rating_dict to cvss v2 and v3 calculators and use it in the get_severity_description methods
 * Add a test for the severity description ranges of cvss v2
-* add travis-ci build status for master to the readme file
 * Update the readme file
 * Tweak the readme file slightly
 * Rename the README file
@@ -54,5 +53,4 @@ CHANGES
 -----
 
 * Update the repository location from bitbucket to github
-* Add a travis-ci configuration file
 * init!
