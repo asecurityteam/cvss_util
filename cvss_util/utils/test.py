@@ -96,7 +96,7 @@ class TestCVSSParser(unittest.TestCase):
 
     @property
     def v2_text(self):
-        return"""
+        return """
 Proposed CVSS score: 10 => *Critical* severity
 
 *Exploitability Metrics*
