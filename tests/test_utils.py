@@ -1,8 +1,8 @@
 #!/usr/bin/python
 import unittest
 
-from . import create_cvss_format
-from . import parse_cvss_format
+from cvss_util.utils import create_cvss_format
+from cvss_util.utils import parse_cvss_format
 
 
 class TestCVSSFormatter(unittest.TestCase):

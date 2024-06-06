@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import unittest
 
-from . import calculator
+from cvss_util.cvssv3 import calculator
 
 
 class TestCVSS3Calculator(unittest.TestCase):
